@@ -9,8 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table
  */
-class Task
-{
+class Task {
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -40,54 +40,62 @@ class Task
      */
     private $isDone;
 
-    public function __construct()
-    {
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct() {
         $this->createdAt = new \Datetime();
         $this->isDone = false;
     }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
     }
 
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
     }
 
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
     }
 
-    public function isDone()
-    {
+    public function isDone() {
         return $this->isDone;
     }
 
-    public function toggle($flag)
-    {
+    public function toggle($flag) {
         $this->isDone = $flag;
     }
+    
+    function getUser() {
+        return $this->user;
+    }
+
+    function setUser($user) {
+        $this->user = $user;
+        return $this;
+    }
+
+
+
 }
