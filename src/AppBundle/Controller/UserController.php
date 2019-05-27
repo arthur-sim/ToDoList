@@ -66,4 +66,5 @@ class UserController extends Controller
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
+    
 }
