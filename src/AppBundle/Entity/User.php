@@ -13,8 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @UniqueEntity("email")
  */
-class User implements UserInterface
-{
+class User implements UserInterface {
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -45,6 +45,12 @@ class User implements UserInterface
      */
     private $tasks;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
     public function __construct(){
        $this->tasks = new ArrayCollection();
     }
@@ -54,48 +60,50 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
     }
 
-    public function getSalt()
-    {
+    public function getSalt() {
         return null;
     }
 
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
     }
 
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
-    public function getRoles()
-    {
-        return array('ROLE_USER');
+    /**
+     * Retourne les rôles de l'user
+     */
+    public function getRoles(): array {
+        $roles = $this->roles;
+
+        // Afin d'être sûr qu'un user a toujours au moins 1 rôle
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
     }
 
-    public function eraseCredentials()
-    {
+    public function setRoles(array $roles): void {
+        $this->roles = $roles;
     }
     
         public function getTasks(): Collection
@@ -121,4 +129,9 @@ class User implements UserInterface
         }
         return $this;
     }
+
+    public function eraseCredentials() {
+        
+    }
+
 }
