@@ -41,7 +41,7 @@ class Task {
     private $isDone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -95,7 +95,5 @@ class Task {
         $this->user = $user;
         return $this;
     }
-
-
 
 }

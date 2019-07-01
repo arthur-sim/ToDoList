@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table("user")
@@ -38,6 +39,11 @@ class User implements UserInterface {
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
      */
     private $email;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="task")
+     */
+    private $tasks;
 
     /**
      * @var array
@@ -45,8 +51,12 @@ class User implements UserInterface {
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
-    public function getId() {
+    public function __construct(){
+       $this->tasks = new ArrayCollection();
+    }
+        
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -94,6 +104,30 @@ class User implements UserInterface {
 
     public function setRoles(array $roles): void {
         $this->roles = $roles;
+    }
+    
+        public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUser($this);
+        }
+        return $this;
+    }
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
+        return $this;
     }
 
     public function eraseCredentials() {

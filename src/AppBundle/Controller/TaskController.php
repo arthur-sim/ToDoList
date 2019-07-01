@@ -7,6 +7,8 @@ use AppBundle\Form\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskController extends Controller
 {
@@ -25,7 +27,8 @@ class TaskController extends Controller
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
-
+        $task->setUser($this->getUser());
+        
         $form->handleRequest($request);
 
         if ($form->isValid()) {
