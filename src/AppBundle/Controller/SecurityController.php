@@ -29,7 +29,7 @@ class SecurityController extends Controller
      */
     public function loginCheck()
     {
-        // This code is never executed.
+        throw new \Exception('This should never be reached!');
     }
 
     /**
@@ -37,6 +37,6 @@ class SecurityController extends Controller
      */
     public function logoutCheck()
     {
-        // This code is never executed.
+        throw new \Exception('This should never be reached!');
     }
 }
