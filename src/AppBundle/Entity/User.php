@@ -55,37 +55,35 @@ class User implements UserInterface {
        $this->tasks = new ArrayCollection();
     }
         
-    public function getId()
-    {
+    function getId() {
         return $this->id;
     }
 
-    public function getUsername() {
+    function getUsername() {
         return $this->username;
     }
 
-    public function setUsername($username) {
-        $this->username = $username;
-    }
-
-    public function getSalt() {
-        return null;
-    }
-
-    public function getPassword() {
+    function getPassword() {
         return $this->password;
     }
 
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-
-    public function getEmail() {
+    function getEmail() {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    function setUsername($username) {
+        $this->username = $username;
+        return $this;
+    }
+
+    function setPassword($password) {
+        $this->password = $password;
+        return $this;
+    }
+
+    function setEmail($email) {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -102,14 +100,16 @@ class User implements UserInterface {
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): void {
+    public function setRoles(array $roles){
         $this->roles = $roles;
+        return $this;
     }
     
-        public function getTasks(): Collection
+    public function getTasks()
     {
         return $this->tasks;
     }
+    
     public function addTask(Task $task): self
     {
         if (!$this->tasks->contains($task)) {
@@ -132,6 +132,10 @@ class User implements UserInterface {
 
     public function eraseCredentials() {
         
+    }
+
+    public function getSalt() {
+        return null;
     }
 
 }
