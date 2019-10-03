@@ -13,7 +13,7 @@ class UserFixtures extends Fixture
         foreach ($this->getUserData() as [ $name, $password, $eMail]) {
             $user = (new User())
                     ->setUsername($name)
-                    ->setPassword($password)
+                    ->setPlainPassword($password)
                     ->setEmail($eMail);
             $manager->persist($user);
             self::$nbUsers++;

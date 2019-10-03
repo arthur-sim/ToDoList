@@ -32,6 +32,8 @@ class User implements UserInterface {
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+    
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
@@ -65,6 +67,7 @@ class User implements UserInterface {
 
     function getPassword() {
         return $this->password;
+        
     }
 
     function getEmail() {
@@ -130,8 +133,21 @@ class User implements UserInterface {
         return $this;
     }
 
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    
     public function eraseCredentials() {
-        
+        $this->setPlainPassword(null);
     }
 
     public function getSalt() {

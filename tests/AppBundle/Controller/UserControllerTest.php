@@ -14,8 +14,14 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/users');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextNotContains('td', 'no records found');
-        $this->assertSelectorTextContains('html', 'admin1');
+        $this->assertLessThan(
+            1,
+            $crawler->filter('html:contains("no records found")')->count()
+        );
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("admin1")')->count()
+        );
     }
     
     public function testCreateAction(){
@@ -38,7 +44,11 @@ class UserControllerTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('html', 'testUsername');
+        
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("testUsername")')->count()
+        );
     }
     
     public function testEditAction(){
@@ -63,6 +73,9 @@ class UserControllerTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('html', 'testEditUsername');
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("testEditUsername")')->count()
+        );
     }
 }
