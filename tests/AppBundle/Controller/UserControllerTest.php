@@ -10,10 +10,13 @@ class UserControllerTest extends WebTestCase
     
     public function testListAction()
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
         $crawler = $client->request('GET', '/users');
-
-        $this->assertResponseIsSuccessful();
+        
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
         $this->assertLessThan(
             1,
             $crawler->filter('html:contains("no records found")')->count()
@@ -32,18 +35,21 @@ class UserControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/users/create');
         
-        $form = $crawler->selectButton('submit')->form();
+        $form = $crawler->selectButton('Ajouter')->form();
 
-        $form['username'] = 'testUsername';
-        $form['password'] = 'testPassword';
-        $form['email'] = 'test@email.com';
-        $form['roles'] = ['ROLE_USER'];
+        $form['user[username]'] = 'testUsername';
+        $form['user[plainPassword][first]'] = 'testPassword';
+        $form['user[plainPassword][second]'] = 'testPassword';
+        $form['user[email]'] = 'test@email.com';
+        $form['user[roles]'] = ['ROLE_USER'];
 
         $crawler = $client->submit($form);
         
-        $client->followRedirect();
+        $crawler = $client->followRedirect();
 
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
+        
+        var_dump($client->getResponse()->getContent());
         
         $this->assertgreaterThan(
             0,
@@ -72,7 +78,7 @@ class UserControllerTest extends WebTestCase
         
         $client->followRedirect();
 
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
         $this->assertgreaterThan(
             0,
             $crawler->filter('html:contains("testEditUsername")')->count()

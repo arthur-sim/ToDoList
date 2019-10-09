@@ -10,11 +10,12 @@ class UserFixtures extends Fixture
     public static $nbUsers = -1;
     public function load(ObjectManager $manager)
     {
-        foreach ($this->getUserData() as [ $name, $password, $eMail]) {
+        foreach ($this->getUserData() as [ $name, $password, $eMail, $roles]) {
             $user = (new User())
                     ->setUsername($name)
                     ->setPlainPassword($password)
-                    ->setEmail($eMail);
+                    ->setEmail($eMail)
+                    ->setRoles($roles);
             $manager->persist($user);
             self::$nbUsers++;
             $this->addReference('user_'.self::$nbUsers, $user);           
@@ -26,9 +27,9 @@ class UserFixtures extends Fixture
     private function getUserData(): array
     {
         return [
-            ['admin1','password','test1@test.com'],
-            ['admin2','password','test2@test.com'],
-            ['admin3','password','test3@test.com']
+            ['admin1','password','test1@test.com',['ROLE_ADMIN']],
+            ['admin2','password','test2@test.com',['ROLE_ADMIN']],
+            ['user3','password','test3@test.com',['ROLE_USER']]
         ];
     }
 

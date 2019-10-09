@@ -1,7 +1,7 @@
-#security:
-#    firewalls:
-#        main:
-#            http_basic: ~
+security:
+    firewalls:
+        main:
+            http_basic: ~
 
 imports:
     - { resource: config_dev.yml }

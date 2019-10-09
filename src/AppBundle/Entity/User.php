@@ -133,7 +133,7 @@ class User implements UserInterface {
         return $this;
     }
 
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
