@@ -107,5 +107,9 @@ class Task {
         $this->user = $user;
         return $this;
     }
-
+    
+    function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
 }

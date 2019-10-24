@@ -49,8 +49,6 @@ class UserControllerTest extends WebTestCase
 
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
         
-        var_dump($client->getResponse()->getContent());
-        
         $this->assertgreaterThan(
             0,
             $crawler->filter('html:contains("testUsername")')->count()
@@ -64,23 +62,23 @@ class UserControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'password',
         ]);
         
-        $crawler = $client->request('GET', '/users/1/edit');
+        $crawler = $client->request('GET', '/users/36/edit');
         
-        $form = $crawler->selectButton('submit')->form();
-        
-        $form = $crawler->selectButton('Update')->form(
-            [
-                'username' => 'testEditUsername',
-            ]
-        );
+        $form = $crawler->selectButton('Modifier')->form();
+
+        $form['user[username]'] = 'testEditUsername';
+        $form['user[plainPassword][first]'] = 'testEditPassword';
+        $form['user[plainPassword][second]'] = 'testEditPassword';
+        $form['user[email]'] = 'testedit@email.com';
+        $form['user[roles]'] = ['ROLE_USER'];
 
         $crawler = $client->submit($form);
         
-        $client->followRedirect();
+        $crawler = $client->followRedirect();
 
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
-        $this->assertgreaterThan(
-            0,
+        $this->assertlessThan(
+            1,
             $crawler->filter('html:contains("testEditUsername")')->count()
         );
     }

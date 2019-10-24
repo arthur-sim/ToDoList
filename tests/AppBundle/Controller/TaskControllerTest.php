@@ -8,78 +8,6 @@ use AppBundle\DataFixtures\ORM\UserFixtures;
 
 class xTaskControllerTest extends WebTestCase
 {    
-    
-//    public function testListAction()
-//    {
-//        $client = static::createClient();
-//
-//        $crawler = $client->request('GET', '/tasks');
-//        
-//        $this->assertgreaterThan(
-//            0,
-//            $crawler->filter('html:contains("Task1")')->count()
-//        );
-//        $this->assertgreaterThan(
-//            0,
-//            $crawler->filter('html:contains("Task3")')->count()
-//        );
-//
-//    }
-////    
-//    public function testCreateAction(){
-//            
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'admin1',
-//            'PHP_AUTH_PW'   => 'password',
-//        ]);
-//        
-//        $crawler = $client->request('GET', '/tasks/create');
-//        
-//        $form = $crawler->selectButton('submit')->form();
-//        
-//        $form['user_id'] = '1';// user a prendre
-//        $form['title'] = 'TestCreateTitle';
-//        $form['content'] = 'TestCreateContent';
-//
-//        $crawler = $client->submit($form);
-//        
-//        $client->followRedirect();
-//
-//        $this->assertResponseIsSuccessful();
-//        $this->assertgreaterThan(
-//            0,
-//            $crawler->filter('html:contains("TestCreateTitle")')->count()
-//        );
-//    }
-////    
-//    public function testEditAction(){
-//        
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'admin1',
-//            'PHP_AUTH_PW'   => 'password',
-//        ]);
-//        
-//        $crawler = $client->request('GET', '/tasks/1/edit');
-//        
-//        $form = $crawler->selectButton('submit')->form();
-//        
-//        $form = $crawler->selectButton('Update')->form(
-//            [
-//                'title' => 'TestEditTitle',
-//            ]
-//        );
-//
-//        $crawler = $client->submit($form);
-//        
-//        $client->followRedirect();
-//        
-//        $this->assertResponseIsSuccessful();
-//        $this->assertgreaterThan(
-//            0,
-//            $crawler->filter('html:contains("TestEditTitle")')->count()
-//        );
-//        
-//    }
 ////    
 ////    public function testToggleAction(){
 ////        $client = static::createClient();
@@ -94,21 +22,90 @@ class xTaskControllerTest extends WebTestCase
 ////        $this->assertResponseIsSuccessful();
 ////        $this->assertSelectorTextNotContains('td', 'Task2');
 ////    }
-////    
-//    public function testDeleteAction() {
-//        $client = static::createClient();
-//        $crawler = $client->request('GET', '/tasks/2/delete');
-//
-//        $form = $crawler->selectButton('Delete')->form();
-//
-//        $client->submit($form);
-//
-//        $client->followRedirect();
-// 
-//        $this->assertLessThan(
-//            1,
-//            $crawler->filter('html:contains("Task2")')->count()
-//        );
-//        
-//    }
+    public function testListAction()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
+        $crawler = $client->request('GET', '/tasks');
+        
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
+        $this->assertLessThan(
+            1,
+            $crawler->filter('html:contains("no records found")')->count()
+        );
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("task1")')->count()
+        );
+    }
+    
+    public function testCreateAction(){
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
+
+        $crawler = $client->request('GET', '/tasks/create');
+        
+        $form = $crawler->selectButton('Créer une tâche')->form();
+
+        $form['task[title]'] = 'titleTest';
+        $form['task[content]'] = 'contentTest';
+
+        $crawler = $client->submit($form);
+        
+        $crawler = $client->followRedirect();
+
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
+        
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("titleTest")')->count()
+        );
+    }
+    
+    public function testEditAction(){
+        
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
+        
+        $crawler = $client->request('GET', '/tasks/28/edit');
+        
+        $form = $crawler->selectButton('Modifier')->form();
+
+        $form['task[title]'] = 'titleTestEdit';
+        $form['task[content]'] = 'contentTestEdit';
+
+        $crawler = $client->submit($form);
+        
+        $crawler = $client->followRedirect();
+
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("titleTestEdit")')->count()
+        );
+    }
+    
+    public function testDeleteAction(){
+        
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
+        
+        $crawler = $client->request('GET', '/tasks/29/delete');
+        
+        $crawler = $client->followRedirect();
+
+        $this->assertEquals(200,$client->getResponse()->getStatusCode());
+        $this->assertgreaterThan(
+            0,
+            $crawler->filter('html:contains("task2")')->count()
+        );
+    }
 }

@@ -10,9 +10,10 @@ class TaskFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {     
-        foreach ($this->getTaskData() as [ $title, $content, $isDone]) {
+        foreach ($this->getTaskData() as [$id, $title, $content, $isDone]) {
             $user = $this->getReference('user_'.rand(0, UserFixtures::$nbUsers));
             $product = (new Task())
+                    ->setId($id)
                     ->setTitle($title)
                     ->setContent($content)
                     ->setIsDone($isDone)
@@ -26,9 +27,9 @@ class TaskFixtures extends Fixture
     private function getTaskData(): array
     {
         return [
-                ['Task1','Content1', '0'],
-                ['Task2','Content2', '0'],
-                ['Task3','Content3', '0']
+                ['1','Task1','Content1', '0'],
+                ['2','Task2','Content2', '0'],
+                ['3','Task3','Content3', '0']
             ];
     }
     public function getDependencies() {

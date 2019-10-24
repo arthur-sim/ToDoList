@@ -153,5 +153,9 @@ class User implements UserInterface {
     public function getSalt() {
         return null;
     }
-
+    
+    function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
 }
