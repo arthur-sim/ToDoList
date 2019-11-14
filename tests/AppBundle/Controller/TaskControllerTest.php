@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DataFixtures\ORM\TaskFixtures;
 use AppBundle\DataFixtures\ORM\UserFixtures;
 
-class xTaskControllerTest extends WebTestCase
-{    
+class TaskControllerTest extends WebTestCase
+{
 ////    
 ////    public function testToggleAction(){
 ////        $client = static::createClient();
