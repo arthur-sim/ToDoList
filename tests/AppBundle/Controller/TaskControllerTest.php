@@ -37,7 +37,7 @@ class TaskControllerTest extends WebTestCase
         );
         $this->assertgreaterThan(
             0,
-            $crawler->filter('html:contains("task1")')->count()
+            $crawler->filter('html:contains("Task1")')->count()
         );
     }
     
@@ -49,7 +49,7 @@ class TaskControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/tasks/create');
         
-        $form = $crawler->selectButton('Créer une tâche')->form();
+        $form = $crawler->selectButton('Ajouter')->form();
 
         $form['task[title]'] = 'titleTest';
         $form['task[content]'] = 'contentTest';
@@ -73,7 +73,7 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'password',
         ]);
         
-        $crawler = $client->request('GET', '/tasks/28/edit');
+        $crawler = $client->request('GET', '/tasks/3/edit');
         
         $form = $crawler->selectButton('Modifier')->form();
 
@@ -98,14 +98,14 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'password',
         ]);
         
-        $crawler = $client->request('GET', '/tasks/29/delete');
+        $crawler = $client->request('GET', '/tasks/2/delete');
         
         $crawler = $client->followRedirect();
 
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
-        $this->assertgreaterThan(
-            0,
-            $crawler->filter('html:contains("task2")')->count()
+        $this->assertlessThan(
+            1,
+            $crawler->filter('html:contains("Task2")')->count()
         );
     }
 }

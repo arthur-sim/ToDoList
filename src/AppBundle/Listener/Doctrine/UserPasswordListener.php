@@ -34,7 +34,7 @@ class UserPasswordListener
 
         $this->encodePassword($entity);
         
-        $em   = $eventArgs->getEntityManager();
+        $em   = $args->getEntityManager();
         $uow  = $em->getUnitOfWork();
         $meta = $em->getClassMetadata(get_class($entity));
         $uow->recomputeSingleEntityChangeSet($meta, $entity);
