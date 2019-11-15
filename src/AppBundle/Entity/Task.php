@@ -61,6 +61,7 @@ class Task {
 
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
+        return $this;
     }
 
     public function getTitle() {
@@ -69,6 +70,7 @@ class Task {
 
     public function setTitle($title) {
         $this->title = $title;
+        return $this;
     }
 
     public function getContent() {
@@ -77,12 +79,22 @@ class Task {
 
     public function setContent($content) {
         $this->content = $content;
+        return $this;
     }
 
     public function isDone() {
         return $this->isDone;
     }
+    
+    function getIsDone() {
+        return $this->isDone;
+    }
 
+    function setIsDone($isDone) {
+        $this->isDone = $isDone;
+        return $this;
+    }
+    
     public function toggle($flag) {
         $this->isDone = $flag;
     }
@@ -95,5 +107,9 @@ class Task {
         $this->user = $user;
         return $this;
     }
-
+    
+    function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
 }
