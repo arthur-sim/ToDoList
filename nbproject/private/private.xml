@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <coverage xmlns="http://www.netbeans.org/ns/code-coverage/1" enabled="true"/>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>app/Resources/views/base.html.twig</url>
+            <bookmark id="1">
+                <name/>
+                <line>78</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/default/index.html.twig</file>
-            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/base.html.twig</file>
-            <file>file:/C:/wamp64/www/ToDoList/src/AppBundle/Controller/SecurityController.php</file>
+            <file>file:/C:/wamp64/www/ToDoList/tests/AppBundle/Controller/UserControllerTest.php</file>
+            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/security/login.html.twig</file>
+            <file>file:/C:/wamp64/www/ToDoList/tests/AppBundle/Controller/TaskControllerTest.php</file>
+            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/task/create.html.twig</file>
+            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/task/edit.html.twig</file>
+            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/task/list.html.twig</file>
             <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/user/create.html.twig</file>
+            <file>file:/C:/wamp64/www/ToDoList/app/Resources/views/user/edit.html.twig</file>
+            <file>file:/C:/wamp64/www/ToDoList/coverage/index.html</file>
         </group>
     </open-files>
 </project-private>
