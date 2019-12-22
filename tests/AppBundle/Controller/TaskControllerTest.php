@@ -9,19 +9,23 @@ use AppBundle\DataFixtures\ORM\UserFixtures;
 class TaskControllerTest extends WebTestCase
 {
 ////    
-////    public function testToggleAction(){
-////        $client = static::createClient();
-////        $crawler = $client->request('GET', '/tasks/3/toggle');
-////
-////        $form = $crawler->selectButton('Delete')->form();
-////
-////        $client->submit($form);
-////
-////        $client->followRedirect();
-////
-////        $this->assertResponseIsSuccessful();
-////        $this->assertSelectorTextNotContains('td', 'Task2');
-////    }
+    public function testToggleAction(){
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'admin1',
+            'PHP_AUTH_PW'   => 'password',
+        ]);
+        $crawler = $client->request('GET', '/tasks');
+
+        $form = $crawler->selectButton('Marquer comme faite')->form();
+
+        $client->submit($form);
+        
+        $this->assertLessThan(
+            3,
+            $crawler->filter('html:contains("Marquer comme faite")')->count()
+        );
+    }
+    
     public function testListAction()
     {
         $client = static::createClient([], [
