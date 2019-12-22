@@ -12,43 +12,50 @@
 
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-        <!-- Custom CSS -->
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+        <!-- Custom CSS/JS -->
         <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <script src="{{ asset('js/homejs.js') }}"></script>
+        {% block header_style %}
+            
+        {% endblock %}
     </head>
 
-    <body>
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">To Do List app</a>
-
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
-                </div>
-            </div>
+    <body>      
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('homepage') }}">ToDoList</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user_create') }}">Créer un utilisateur</a>
+                </li>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>
+                    </li>
+                {% endif %}
+                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
         </nav>
 
-        <!-- Page Content -->
         <div class="container">
-            <div class="row">
-                <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-
-                {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% endif %}
-
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                {% endif %}
-            </div>
-
             <div class="row">
                 <div class="col-md-12">
                     {% for flash_message in app.session.flashBag.get('success') %}
@@ -62,36 +69,25 @@
                             <strong>Oops !</strong> {{ flash_message }}
                         </div>
                     {% endfor %}
-
-                    {% block header_title %}{% endblock %}
-                    {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
                 </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-                <div class="col-md-12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
+            </div>          
         </div>
-        <!-- /.container -->
 
-        <div class="container">
-
-            <hr>
-            <footer>
+        {% block body %}
+        {% endblock %}
+        
+        
+        <div class="bottom section-padding">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <p class="pull-right">Copyright &copy; OpenClassrooms</p>
+                    <div class="col-md-12 text-center">
+                        <div class="copyright">
+                            <p>© <span>2019</span> <a href="{{ path('homepage') }}" class="transition">ToDoList</a> Tous droits réservés</p>
+                        </div>
                     </div>
                 </div>
-            </footer>
-
+            </div>
         </div>
-
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        
     </body>
 </html>

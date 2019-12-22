@@ -1,17 +1,31 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     {% if error %}
         <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+        
+    <div class="wrapper fadeInDown" style="margin-top:2%; margin-bottom: 2%;">
+        <div id="formContent">
+          <!-- Tabs Titles -->
 
-    <form action="{{ path('login_check') }}" method="post">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <h2 style="margin: 12%;">
+                    Connectez vous
+                </h2>
+            </div>
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="_password" />
+            <!-- Login Form -->
+            <form action="{{ path('login_check') }}" method="post">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-        <button class="btn btn-success" type="submit">Se connecter</button>
-    </form>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="_password" />
+                <br>
+                <button class="btn btn-success" type="submit" style="margin-bottom: 10%;margin-top:5%;">Se connecter</button>
+            </form>
+
+        </div>
+    </div>
 {% endblock %}

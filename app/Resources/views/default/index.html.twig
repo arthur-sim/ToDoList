@@ -1,14 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block header_title %}
-    <h1>Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !</h1>
-{% endblock %}
+{% block header_title %}ToDoList{% endblock %}
+{% block header_img %}{% endblock %}
 
 {% block body %}
+<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
+    <!-- Overlay -->
+    <div class="overlay"></div>
 
-    <div class="row">
-        <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
-        <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
-        <a href="" class="btn btn-secondary">Consulter la liste des tâches terminées</a>
-    </div>
+    <!-- Wrapper for slides -->
+    <div >
+        <div class="item slides">
+            <div class="slide-2"></div>
+            <div class="hero">        
+                <hgroup>
+                    <h1>ToDoList</h1>        
+                    <h3>Organisez vous !</h3>
+                </hgroup>
+                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
+                    <a class="btn" href="{{ path('task_list') }}">Ecrire une première tâche</a>
+                {% else %}
+                    <a class="btn" href="{{ path('task_list') }}">Consulter mes tâches</a>
+                {% endif %}
+            </div>
+        </div>
+    </div> 
+</div>
+            
+<div style="width: 35%; margin: auto; margin-top: 10%; margin-bottom: 3%;">
+    <iframe src="https://giphy.com/embed/l49K0MP1EQ579QTII" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>     
+</div>
+<h2 style="width: 70%; margin: auto;margin-top: 2%; margin-bottom: 2%;">
+    Marre d'oublier vos tâches ?
+</h2>
+<h3 style="width: 70%; margin: auto;margin-top: 2%; margin-bottom: 10%;">
+    ToDolist est une application de gestion de tâches.<br>
+    Gérez vos tâches simplement et rapidement.
+</h3>
 {% endblock %}
